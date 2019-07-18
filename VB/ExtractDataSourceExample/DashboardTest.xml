@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard CurrencyCulture="en-US">
+  <Title Text="Dashboard" />
+  <DataSources>
+    <SqlDataSource Name="SQL Data Source 1" ComponentName="dashboardSqlDataSource1">
+      <Connection Name="Database1ConnectionString" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="Query">
+        <Sql>select "Orders"."OrderID", "Orders"."OrderDate", "Orders"."ShipCity",
+       "Orders"."ShipCountry", "Employees"."LastName",
+       "Employees"."FirstName", "Products"."ProductName",
+       "Order Details"."UnitPrice", "Order Details"."Quantity",
+       "Order Details"."Discount", "Categories"."CategoryName",
+       "Employees"."FirstName" + N' ' +
+       "Employees"."LastName" as "SalesPerson",
+       (("Order Details"."UnitPrice" * "Order Details"."Quantity") *
+       (1 - "Order Details"."Discount")) as "ExtPrice"
+  from (((("dbo"."Order Details" "Order Details"
+  inner join "dbo"."Orders" "Orders"
+       on ("Orders"."OrderID" = "Order Details"."OrderID"))
+  inner join "dbo"."Products" "Products"
+       on ("Products"."ProductID" = "Order Details"."ProductID"))
+  inner join "dbo"."Employees" "Employees"
+       on ("Employees"."EmployeeID" = "Orders"."EmployeeID"))
+  inner join "dbo"."Categories" "Categories"
+       on ("Categories"."CategoryID" = "Products"."CategoryID"))
+</Sql>
+      </Query>
+      <ResultSchema>
+        <DataSet Name="SQL Data Source 1">
+          <View Name="Query">
+            <Field Name="OrderID" Type="Int32" />
+            <Field Name="OrderDate" Type="DateTime" />
+            <Field Name="ShipCity" Type="String" />
+            <Field Name="ShipCountry" Type="String" />
+            <Field Name="LastName" Type="String" />
+            <Field Name="FirstName" Type="String" />
+            <Field Name="ProductName" Type="String" />
+            <Field Name="UnitPrice" Type="Decimal" />
+            <Field Name="Quantity" Type="Int16" />
+            <Field Name="Discount" Type="Single" />
+            <Field Name="CategoryName" Type="String" />
+            <Field Name="SalesPerson" Type="String" />
+            <Field Name="ExtPrice" Type="Single" />
+          </View>
+        </DataSet>
+      </ResultSchema>
+      <ConnectionOptions CloseConnection="true" />
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="dashboardSqlDataSource1" DataMember="Query">
+      <InteractivityOptions IsDrillDownEnabled="true" />
+      <DataItems>
+        <Dimension DataMember="CategoryName" DefaultId="DataItem0" />
+        <Dimension DataMember="ProductName" DefaultId="DataItem1" />
+        <Measure DataMember="ExtPrice" DefaultId="DataItem2" />
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridMeasureColumn>
+          <Measure DefaultId="DataItem2" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Card ComponentName="cardDashboardItem1" Name="Cards 1" DataSource="dashboardSqlDataSource1" DataMember="Query">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="SalesPerson" DefaultId="DataItem0" />
+        <Measure DataMember="ExtPrice" DefaultId="DataItem1" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem0" />
+      </SeriesDimensions>
+      <Card>
+        <ActualValue DefaultId="DataItem1" />
+        <AbsoluteVariationNumericFormat />
+        <PercentVariationNumericFormat />
+        <PercentOfTargetNumericFormat />
+        <LayoutTemplate MinWidth="100" Type="Lightweight">
+          <MainValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <BottomValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <DeltaIndicator Visible="false" />
+          <Sparkline Visible="false" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+    <RangeFilter ComponentName="rangeFilterDashboardItem1" Name="Range Filter 1" DataSource="dashboardSqlDataSource1" DataMember="Query">
+      <DataItems>
+        <Dimension DataMember="OrderDate" DateTimeGroupInterval="MonthYear" DefaultId="DataItem0" />
+        <Measure DataMember="ExtPrice" DefaultId="DataItem1" />
+      </DataItems>
+      <Argument DefaultId="DataItem0" />
+      <Series>
+        <Simple SeriesType="Line">
+          <Value DefaultId="DataItem1" />
+        </Simple>
+      </Series>
+    </RangeFilter>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Weight="100">
+      <LayoutGroup Orientation="Vertical" Weight="49.914821124361161">
+        <LayoutItem DashboardItem="cardDashboardItem1" Weight="70.571428571428569" />
+        <LayoutItem DashboardItem="rangeFilterDashboardItem1" Weight="29.428571428571427" />
+      </LayoutGroup>
+      <LayoutItem DashboardItem="gridDashboardItem1" Weight="50.085178875638839" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>
