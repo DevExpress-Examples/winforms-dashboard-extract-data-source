@@ -10,7 +10,6 @@ namespace ExtractDataSourceExample
         public Form1()
         {
             InitializeComponent();
-            dashboardViewer1.ConfigureDataConnection += DashboardViewer1_ConfigureDataConnection;
             dashboardViewer1.CustomizeDashboardTitle += DashboardViewer1_CustomizeDashboardTitle;
             dashboardViewer1.LoadDashboard("DashboardTest.xml");
         }
@@ -40,16 +39,11 @@ namespace ExtractDataSourceExample
 
         private void UpdateExtract()
         {
-            Dashboard dashboard = new Dashboard();
-            dashboard.LoadFromXDocument(dashboardViewer1.Dashboard.SaveToXDocument());
-            foreach (var ds in dashboard.DataSources.Where(d => d is DashboardExtractDataSource))
-            {
-                DashboardExtractDataSource extractDsTempSource = ds as DashboardExtractDataSource;
-                extractDsTempSource.FileName += "_updated";
-                extractDsTempSource.UpdateExtractFile();
-            }
-            dashboard.Dispose();
             dashboardViewer1.ReloadData();
+            foreach (var ds in dashboardViewer1.Dashboard.DataSources.Where(d => d is DashboardExtractDataSource))
+            {
+                ((DashboardExtractDataSource)ds).UpdateExtractFile();
+            }
         }
 
         private void DashboardViewer1_CustomizeDashboardTitle(object sender, CustomizeDashboardTitleEventArgs e)
@@ -67,22 +61,6 @@ namespace ExtractDataSourceExample
                 Caption = "Create Extract Data Source",
             };
             e.Items.Insert(0,itemSave);
-        }
-
-
-        private void DashboardViewer1_ConfigureDataConnection(object sender, DashboardConfigureDataConnectionEventArgs e)
-        {
-            if (e.ConnectionParameters is ExtractDataSourceConnectionParameters connParams)
-            {
-                string current = connParams.FileName;
-                string updated = connParams.FileName + "_updated";
-                if (File.Exists(updated))
-                {
-                    File.Delete(current);
-                    File.Copy(updated, current);
-                    File.Delete(updated);
-                }
-            }
         }
     }
 }
