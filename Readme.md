@@ -16,9 +16,6 @@ API in this example:
 * [DashboardExtractDataSource](https://docs.devexpress.com/Dashboard/DevExpress.DashboardCommon.DashboardExtractDataSource) class
 * [DashboardExtractDataSource.ExtractSourceOptions](https://docs.devexpress.com/Dashboard/DevExpress.DashboardCommon.DashboardExtractDataSource.ExtractSourceOptions) property
 * [DashboardExtractDataSource.UpdateExtractFile](https://docs.devexpress.com/Dashboard/DevExpress.DashboardCommon.DashboardExtractDataSource.UpdateExtractFile) method
-* [Dashboard.SaveToXDocument](https://docs.devexpress.com/Dashboard/DevExpress.DashboardCommon.Dashboard.SaveToXDocument) method
-* [Dashboard.LoadFromXDocument](https://docs.devexpress.com/Dashboard/DevExpress.DashboardCommon.Dashboard.LoadFromXDocument) method
-* [DashboardViewer.ConfigureDataConnection](https://docs.devexpress.com/Dashboard/DevExpress.DashboardWin.DashboardViewer.ConfigureDataConnection) event
 * [DashboardViewer.CustomizeDashboardTitle](https://docs.devexpress.com/Dashboard/DevExpress.DashboardWin.DashboardViewer.CustomizeDashboardTitle) event
 
 See also:

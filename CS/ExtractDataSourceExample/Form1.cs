@@ -25,9 +25,8 @@ namespace ExtractDataSourceExample
 
                     if (ds is DashboardSqlDataSource)
                         extractDataSource.ExtractSourceOptions.DataMember = ((DashboardSqlDataSource)(ds)).Queries[0].Name;
-                    // If the data source is an Entity Framework data source, specify the ExtractSourceOptions.DataMember.
 
-                    extractDataSource.FileName = "Extract_" + ds.Name + ".dat";
+                extractDataSource.FileName = "Extract_" + ds.Name + ".dat";
                     extractDataSource.UpdateExtractFile();
                     foreach (DataDashboardItem item in dashboardViewer1.Dashboard.Items)
                         if (item.DataSource == ds)

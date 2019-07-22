@@ -23,9 +23,8 @@ Namespace ExtractDataSourceExample
 					If TypeOf ds Is DashboardSqlDataSource Then
 						extractDataSource.ExtractSourceOptions.DataMember = DirectCast(ds, DashboardSqlDataSource).Queries(0).Name
 					End If
-					' If the data source is an Entity Framework data source, specify the ExtractSourceOptions.DataMember.
 
-					extractDataSource.FileName = "Extract_" & ds.Name & ".dat"
+				extractDataSource.FileName = "Extract_" & ds.Name & ".dat"
 					extractDataSource.UpdateExtractFile()
 					For Each item As DataDashboardItem In dashboardViewer1.Dashboard.Items
 						If item.DataSource Is ds Then
