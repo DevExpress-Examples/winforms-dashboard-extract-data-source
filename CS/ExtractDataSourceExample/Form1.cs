@@ -1,7 +1,7 @@
 ﻿using DevExpress.DashboardCommon;
 using DevExpress.DashboardWin;
-using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace ExtractDataSourceExample
 {
@@ -14,6 +14,7 @@ namespace ExtractDataSourceExample
             dashboardViewer1.LoadDashboard("DashboardTest.xml");
         }
 
+        delegate void SafeUpdate(string file);
         private void CreateExtractAndSave()
         {
             DataSourceCollection dsCollection = new DataSourceCollection();
@@ -45,6 +46,21 @@ namespace ExtractDataSourceExample
             }
         }
 
+        private void UpdateExtractAsync()
+        {
+            dashboardViewer1.UpdateExtractDataSourcesAsync((a, b) => { OnDataReady(a); }, (a, __) => { MessageBox.Show($"File {a} updated "); });
+        }
+
+        void OnDataReady(string fileName)
+        {
+            dashboardViewer1.Invoke(new SafeUpdate(UpdateViewer), new object[] { fileName });
+        }
+        void UpdateViewer(string fileName)
+        {
+            MessageBox.Show($"Data for the file {fileName} is ready ");
+            dashboardViewer1.ReloadData();
+        }
+
         private void DashboardViewer1_CustomizeDashboardTitle(object sender, CustomizeDashboardTitleEventArgs e)
         {
             DashboardToolbarItem itemUpdate = new DashboardToolbarItem(
@@ -53,6 +69,13 @@ namespace ExtractDataSourceExample
                 Caption = "Update Extract Data Source",
             };
             e.Items.Add(itemUpdate);
+
+            DashboardToolbarItem itemUpdateAsync = new DashboardToolbarItem(
+                (args) => UpdateExtractAsync())
+            {
+                Caption = "Async Update Extract Data Sources",
+            };
+            e.Items.Add(itemUpdateAsync);
 
             DashboardToolbarItem itemSave = new DashboardToolbarItem(
                 (args) => CreateExtractAndSave())

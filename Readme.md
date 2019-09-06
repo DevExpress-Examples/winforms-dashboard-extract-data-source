@@ -8,6 +8,8 @@ Click the _Create Extract Data Source_ button to create the [DashboardExtractDat
 
 Click the _Update Extract Data Source_ button to load current data to the Extract data file bound to the dashboard.
 
+Click the _Async Update Extract Data Sources_ button to asynchronously update all extract data sources bound to the dashboard.
+
 ![screenshot](/images/screenshot.png). 
 
 API in this example:

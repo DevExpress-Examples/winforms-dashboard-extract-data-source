@@ -2,7 +2,7 @@
 <Dashboard CurrencyCulture="en-US">
   <Title Text="Dashboard" />
   <DataSources>
-    <SqlDataSource Name="SQL Data Source 1" ComponentName="dashboardSqlDataSource1">
+    <SqlDataSource Name="SQL_DataSource" ComponentName="dashboardSqlDataSource1">
       <Connection Name="Database1ConnectionString" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="Query">
         <Sql>select "Orders"."OrderID", "Orders"."OrderDate", "Orders"."ShipCity",

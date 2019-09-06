@@ -1,7 +1,7 @@
 ﻿Imports DevExpress.DashboardCommon
 Imports DevExpress.DashboardWin
-Imports System.IO
 Imports System.Linq
+Imports System.Windows.Forms
 
 Namespace ExtractDataSourceExample
 	Partial Public Class Form1
@@ -13,6 +13,7 @@ Namespace ExtractDataSourceExample
 			dashboardViewer1.LoadDashboard("DashboardTest.xml")
 		End Sub
 
+		Private Delegate Sub SafeUpdate(ByVal file As String)
 		Private Sub CreateExtractAndSave()
 			Dim dsCollection As New DataSourceCollection()
 			dsCollection.AddRange(dashboardViewer1.Dashboard.DataSources.Where(Function(d) Not (TypeOf d Is DashboardExtractDataSource)))
@@ -43,9 +44,28 @@ Namespace ExtractDataSourceExample
 			Next ds
 		End Sub
 
+		Private Sub UpdateExtractAsync()
+			dashboardViewer1.UpdateExtractDataSourcesAsync(Sub(a, b)
+				OnDataReady(a)
+			End Sub, Sub(a, __)
+				MessageBox.Show($"File {a} updated ")
+End Sub)
+		End Sub
+
+		Private Sub OnDataReady(ByVal fileName As String)
+			dashboardViewer1.Invoke(New SafeUpdate(AddressOf UpdateViewer), New Object() { fileName })
+		End Sub
+		Private Sub UpdateViewer(ByVal fileName As String)
+			MessageBox.Show($"Data for the file {fileName} is ready ")
+			dashboardViewer1.ReloadData()
+		End Sub
+
 		Private Sub DashboardViewer1_CustomizeDashboardTitle(ByVal sender As Object, ByVal e As CustomizeDashboardTitleEventArgs)
 			Dim itemUpdate As New DashboardToolbarItem(Sub(args) UpdateExtract()) With {.Caption = "Update Extract Data Source"}
 			e.Items.Add(itemUpdate)
+
+			Dim itemUpdateAsync As New DashboardToolbarItem(Sub(args) UpdateExtractAsync()) With {.Caption = "Async Update Extract Data Sources"}
+			e.Items.Add(itemUpdateAsync)
 
 			Dim itemSave As New DashboardToolbarItem(Sub(args) CreateExtractAndSave()) With {.Caption = "Create Extract Data Source"}
 			e.Items.Insert(0,itemSave)
