@@ -10,7 +10,7 @@ Click the _Update Extract Data Source_ button to load current data to the Extrac
 
 Click the _Async Update Extract Data Sources_ button to asynchronously update all extract data sources bound to the dashboard.
 
-![screenshot](/images/screenshot.png). 
+![screenshot](/images/screenshot.png) 
 
 API in this example:
 
@@ -18,6 +18,7 @@ API in this example:
 * [DashboardExtractDataSource](https://docs.devexpress.com/Dashboard/DevExpress.DashboardCommon.DashboardExtractDataSource) class
 * [DashboardExtractDataSource.ExtractSourceOptions](https://docs.devexpress.com/Dashboard/DevExpress.DashboardCommon.DashboardExtractDataSource.ExtractSourceOptions) property
 * [DashboardExtractDataSource.UpdateExtractFile](https://docs.devexpress.com/Dashboard/DevExpress.DashboardCommon.DashboardExtractDataSource.UpdateExtractFile) method
+* [DashboardViewer.UpdateExtractDataSourcesAsync](https://docs.devexpress.com/Dashboard/DevExpress.DashboardCommon.DashboardExtractDataSource.UpdateExtractDataSourcesAsync)
 * [DashboardViewer.CustomizeDashboardTitle](https://docs.devexpress.com/Dashboard/DevExpress.DashboardWin.DashboardViewer.CustomizeDashboardTitle) event
 
 See also:
