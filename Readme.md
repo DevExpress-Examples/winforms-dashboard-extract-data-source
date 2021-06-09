@@ -1,3 +1,7 @@
+*Files to look at*:
+
+* [Form1.cs](./CS/ExtractDataSourceExample/Form1.cs) (VB: [Form1.vb](./VB/ExtractDataSourceExample/Form1.vb))
+
 # WinForms - Dashboard with Extract Data Source
 
 This example demonstrates how to create the Extract data source, replace existing dashboard data sources with Extract data sources and update the Extract data file.
@@ -21,7 +25,12 @@ API in this example:
 * [DashboardViewer.UpdateExtractDataSourcesAsync](https://docs.devexpress.com/Dashboard/DevExpress.DashboardCommon.DashboardExtractDataSource.UpdateExtractDataSourcesAsync)
 * [DashboardViewer.CustomizeDashboardTitle](https://docs.devexpress.com/Dashboard/DevExpress.DashboardWin.DashboardViewer.CustomizeDashboardTitle) event
 
-See also:
+## Documentation
+
+- [Extract Data Source](https://docs.devexpress.com/Dashboard/115900)
+- [Providing Data](https://docs.devexpress.com/Dashboard/16914)
+
+## More Examples
 
 * [WPF Dashboard - How to Update the Extract Data File](https://github.com/DevExpress-Examples/wpf-dashboard-how-to-update-extract-data-source-file)
 
