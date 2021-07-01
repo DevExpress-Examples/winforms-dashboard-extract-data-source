@@ -55,13 +55,13 @@ namespace ExtractDataSourceExample {
 
         private void DashboardViewer1_CustomizeDashboardTitle(object sender, CustomizeDashboardTitleEventArgs e) {
             DashboardToolbarItem itemUpdate = new DashboardToolbarItem((args) => UpdateExtract()) {
-				Caption = "Update Extract Data Source",
-			};
+                Caption = "Update Extract Data Source",
+            };
             e.Items.Add(itemUpdate);
 
             DashboardToolbarItem itemUpdateAsync = new DashboardToolbarItem((args) => UpdateExtractAsync()) {
-				Caption = "Async Update Extract Data Sources",
-			};
+                Caption = "Async Update Extract Data Sources",
+            };
             e.Items.Add(itemUpdateAsync);
 
             DashboardToolbarItem itemSave = new DashboardToolbarItem((args) => CreateExtractAndSave()) {
