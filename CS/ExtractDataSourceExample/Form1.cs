@@ -1,5 +1,6 @@
 ﻿using DevExpress.DashboardCommon;
 using DevExpress.DashboardWin;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -22,7 +23,7 @@ namespace ExtractDataSourceExample {
                     if (ds is DashboardSqlDataSource)
                         extractDataSource.ExtractSourceOptions.DataMember = ((DashboardSqlDataSource)(ds)).Queries[0].Name;
 
-                    extractDataSource.FileName = "Extract_" + ds.Name + ".dat";
+                    extractDataSource.FileName = Path.GetFullPath($"Extract_{ds.Name}.dat");
                     extractDataSource.UpdateExtractFile();
                     foreach (DataDashboardItem item in dashboardViewer1.Dashboard.Items)
                         if (item.DataSource == ds)
@@ -39,10 +40,14 @@ namespace ExtractDataSourceExample {
             }
         }
 
-        private void UpdateExtractAsync() {
-            dashboardViewer1.UpdateExtractDataSourcesAsync((a, b) => { OnDataReady(a); }, (a, __) => { 
-                MessageBox.Show($"File {a} updated "); 
-            });
+        private async void UpdateExtractAsync() {
+            await dashboardViewer1.UpdateExtractDataSourcesAsync(
+                (fileName, result) => { 
+                    OnDataReady(fileName); 
+                },
+                (fileName, result) => { 
+                    MessageBox.Show($"File {fileName} updated "); 
+                });
         }
 
         void OnDataReady(string fileName) {
