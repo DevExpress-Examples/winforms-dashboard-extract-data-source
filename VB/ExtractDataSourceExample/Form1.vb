@@ -1,5 +1,6 @@
 ﻿Imports DevExpress.DashboardCommon
 Imports DevExpress.DashboardWin
+Imports System.IO
 Imports System.Linq
 Imports System.Windows.Forms
 
@@ -18,20 +19,20 @@ Namespace ExtractDataSourceExample
 			Dim dsCollection As New DataSourceCollection()
 			dsCollection.AddRange(dashboardViewer1.Dashboard.DataSources.Where(Function(d) Not (TypeOf d Is DashboardExtractDataSource)))
 			For Each ds In dsCollection
-					Dim extractDataSource As New DashboardExtractDataSource()
-					extractDataSource.ExtractSourceOptions.DataSource = ds
+				Dim extractDataSource As New DashboardExtractDataSource()
+				extractDataSource.ExtractSourceOptions.DataSource = ds
 
-					If TypeOf ds Is DashboardSqlDataSource Then
-						extractDataSource.ExtractSourceOptions.DataMember = DirectCast(ds, DashboardSqlDataSource).Queries(0).Name
+				If TypeOf ds Is DashboardSqlDataSource Then
+					extractDataSource.ExtractSourceOptions.DataMember = DirectCast(ds, DashboardSqlDataSource).Queries(0).Name
+				End If
+
+				extractDataSource.FileName = Path.GetFullPath($"Extract_{ds.Name}.dat")
+				extractDataSource.UpdateExtractFile()
+				For Each item As DataDashboardItem In dashboardViewer1.Dashboard.Items
+					If item.DataSource Is ds Then
+						item.DataSource = extractDataSource
 					End If
-
-				extractDataSource.FileName = "Extract_" & ds.Name & ".dat"
-					extractDataSource.UpdateExtractFile()
-					For Each item As DataDashboardItem In dashboardViewer1.Dashboard.Items
-						If item.DataSource Is ds Then
-							item.DataSource = extractDataSource
-						End If
-					Next item
+				Next item
 			Next ds
 			dashboardViewer1.Dashboard.DataSources.RemoveRange(dsCollection)
 			dashboardViewer1.Dashboard.SaveToXml("Dashboard_Extract.xml")
@@ -45,15 +46,17 @@ Namespace ExtractDataSourceExample
 		End Sub
 
 		Private Sub UpdateExtractAsync()
-			dashboardViewer1.UpdateExtractDataSourcesAsync(Sub(a, b)
-				OnDataReady(a)
-			End Sub, Sub(a, __)
-				MessageBox.Show($"File {a} updated ")
-End Sub)
+			dashboardViewer1.UpdateExtractDataSourcesAsync(
+				Sub(fileName, result)
+					OnDataReady(fileName)
+				End Sub,
+				Sub(fileName, result)
+					MessageBox.Show($"File {fileName} updated ")
+				End Sub)
 		End Sub
 
 		Private Sub OnDataReady(ByVal fileName As String)
-			dashboardViewer1.Invoke(New SafeUpdate(AddressOf UpdateViewer), New Object() { fileName })
+			dashboardViewer1.Invoke(New SafeUpdate(AddressOf UpdateViewer), New Object() {fileName})
 		End Sub
 		Private Sub UpdateViewer(ByVal fileName As String)
 			MessageBox.Show($"Data for the file {fileName} is ready ")
