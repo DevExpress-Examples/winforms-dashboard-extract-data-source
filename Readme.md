@@ -8,8 +8,7 @@
 This example shows how to create the Extract data source, replace existing dashboard data sources with Extract data sources and update the Extract data file.
 
 <!-- default file list -->
-## Files to Look At
-
+## Files to Review
 * [Form1.cs](./CS/ExtractDataSourceExample/Form1.cs) (VB: [Form1.vb](./VB/ExtractDataSourceExample/Form1.vb))
 <!-- default file list end -->
 
