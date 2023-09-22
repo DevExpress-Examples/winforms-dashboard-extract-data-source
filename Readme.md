@@ -7,11 +7,6 @@
 
 This example shows how to create the Extract data source, replace existing dashboard data sources with Extract data sources and update the Extract data file.
 
-<!-- default file list -->
-## Files to Review
-* [Form1.cs](./CS/ExtractDataSourceExample/Form1.cs) (VB: [Form1.vb](./VB/ExtractDataSourceExample/Form1.vb))
-<!-- default file list end -->
-
 The [DashboardViewer](https://docs.devexpress.com/Dashboard/DevExpress.DashboardWin.DashboardViewer) loads a dashboard. The dashboard is initially bound to the Microsoft SQL Server database file (.mdf) with the [DashboardSqlDataSource](https://docs.devexpress.com/Dashboard/DevExpress.DashboardCommon.DashboardSqlDataSource). 
 
 Click the _Create Extract Data Source_ button to create the [DashboardExtractDataSource](https://docs.devexpress.com/Dashboard/DevExpress.DashboardCommon.DashboardExtractDataSource) based on the original data source, add the newly created data source to the dashboard, iterate over dashboard items to change the data source settings, and finally save the modified dashboard and the Extract data file. 
@@ -21,6 +16,9 @@ Click the _Update Extract Data Source_ button to load current data to the Extrac
 Click the _Async Update Extract Data Sources_ button to asynchronously update all extract data sources bound to the dashboard.
 
 ![screenshot](/images/screenshot.png)
+
+## Files to Review
+* [Form1.cs](./CS/ExtractDataSourceExample/Form1.cs) (VB: [Form1.vb](./VB/ExtractDataSourceExample/Form1.vb))
 
 ## API
 
